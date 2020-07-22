@@ -1,6 +1,6 @@
 NSCD
 =========
-[![Build Status](https://travis-ci.org/samdoran/ansible-role-nscd.svg?branch=master)](https://travis-ci.org/samdoran/ansible-role-nscd)
+[![Build Status](https://travis-ci.com/samdoran/ansible-role-nscd.svg?branch=master)](https://travis-ci.com/samdoran/ansible-role-nscd)
 [![Galaxy](https://img.shields.io/badge/galaxy-samdoran.nscd-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/nscd/)
 
 
@@ -38,9 +38,12 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: samdoran.nscd, nscd_debug_level: 1, nscd_paranoad: "yes" }
+         - role: samdoran.nscd
+           vars:
+             nscd_debug_level: 1
+             nscd_paranoia: 'yes'
 
 License
 -------
 
-MIT
+Apache 2.0

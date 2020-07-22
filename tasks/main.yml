@@ -8,7 +8,7 @@
   yum:
     name: nscd
     state: latest
-  when: ansible_pkg_mgr == 'yum'
+  when: ansible_pkg_mgr in ['yum', 'dnf']
   tags:
     - nscd
 
@@ -28,7 +28,7 @@
     dest: /etc/nscd.conf
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify: restart nscd
   tags:
     - nscd

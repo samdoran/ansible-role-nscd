@@ -1,19 +1,34 @@
+language: python
 services: docker
 
 env:
-  - distro: centos6
-  - distro: centos7
-  - distro: ubuntu14
-  - distro: ubuntu16
+  global:
+    - ROLE_NAME: nscd
+  matrix:
+    - MOLECULE_DISTRIBUTION: centos6
+    - MOLECULE_DISTRIBUTION: centos7
+    - MOLECULE_DISTRIBUTION: centos8
+    - MOLECULE_DISTRIBUTION: rhel7
+    - MOLECULE_DISTRIBUTION: rhel8
+    - MOLECULE_DISTRIBUTION: ubuntu18
+    - MOLECULE_DISTRIBUTION: ubuntu20
+    - MOLECULE_DISTRIBUTION: debian9
+    - MOLECULE_DISTRIBUTION: debian10
+    - MOLECULE_DISTRIBUTION: fedora31
+    - MOLECULE_DISTRIBUTION: fedora32
+
+install:
+  - pip install molecule[lint] docker
+
+before_script:
+  # Remove "ansible-role-" prefix from role name
+  - cd ../
+  - mv ansible-role-${ROLE_NAME/_/-} $ROLE_NAME
+  - cd $ROLE_NAME
 
 script:
-
-  # Download test script
-  - wget -O ${PWD}/tests/test-ansible-role.sh https://gist.githubusercontent.com/samdoran/c3d392ee697881fa33a1d1a65814a07b/raw
-  - chmod +x ${PWD}/tests/test-ansible-role.sh
-
   # Run tests
-  - ${PWD}/tests/test-ansible-role.sh -d $distro
+  - molecule test --all
 
 notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
