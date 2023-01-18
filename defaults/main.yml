@@ -53,7 +53,7 @@ nscd_services:
   # netgroup caching is known-broken in Ubuntu, so disable it in the default config,
   # see: https://bugs.launchpad.net/ubuntu/+source/eglibc/+bug/1068889
   netgroup:
-    enable-cache: "{% if ansible_os_family == 'Debian' %}no{% else %}yes{% endif %}"
+    enable-cache: "{% if ansible_facts.os_family == 'Debian' %}no{% else %}yes{% endif %}"
     positive-time-to-live: 28800
     negative-time-to-live: 20
     suggested-size: 211
